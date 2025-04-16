@@ -2,7 +2,7 @@
 
 - Este é um simples e fofo reprodutor de música feito em Delphi (VCL). Ele permite que o usuário selecione uma música do computador, controle a reprodução com um botão play/pause, veja uma raposinha mudar de posição conforme a música e acompanhar seu progresso na TrackBar.
 
-- Funcionalidades
+- Funcionalidades:
   
 Selecionar Música
 
@@ -10,10 +10,10 @@ Botão que abre um TOpenDialog para o usuário escolher um arquivo .mp3, .wav, e
 
 O caminho da música é carregado no TMediaPlayer, e o nome pode ser exibido num TLabel.
 
-- ▶ Play / ⏸ Pause
+- ▶ Play / ⏸ Pause:
 Um botão alterna entre Play e Pause.
 
-- Raposa Dinâmica
+- Raposa Dinâmica:
   
 Um TImage exibe a raposinha.
 
@@ -25,7 +25,7 @@ pngwing - raposa deitada → Música pausada.
 
 pngwing - raposa em pé → Música tocando.
 
-- TrackBar Funcional (Progresso da Música)
+- TrackBar Funcional (Progresso da Música):
 A TTrackBar mostra o progresso da música em tempo real.
 
 A posição da barra se atualiza automaticamente enquanto a música toca.
