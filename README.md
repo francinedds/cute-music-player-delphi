@@ -1,6 +1,6 @@
 # Music Player em Delphi 🦊
 
-- Este é um simples e fofo reprodutor de música feito em Delphi (VCL). Ele permite que o usuário selecione uma música do computador, controle a reprodução com um botão play/pause, veja uma raposinha mudar de posição conforme a música, e usar uma barra de progresso (TrackBar) totalmente funcional para acompanhar a posição da música.
+- Este é um simples e fofo reprodutor de música feito em Delphi (VCL). Ele permite que o usuário selecione uma música do computador, controle a reprodução com um botão play/pause, veja uma raposinha mudar de posição conforme a música e acompanhar seu progresso na TrackBar.
 
 - Funcionalidades
   
