@@ -1,0 +1,149 @@
+unit view.principal;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.StrUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.MPlayer, Vcl.ExtCtrls,
+  Vcl.Imaging.pngimage, System.ImageList, Vcl.ImgList, Vcl.StdCtrls;
+
+type
+  TViewMusicPlayer = class(TForm)
+    pnlHeader: TPanel;
+    pnlContent: TPanel;
+    btnPlay: TImage;
+    btnNext: TImage;
+    btnPrevious: TImage;
+    pnlBar: TPanel;
+    pnlCircle: TImage;
+    btnClose: TImage;
+    lblTitle: TLabel;
+    lblSongTitle: TLabel;
+    lblArtist: TLabel;
+    imgFavorite: TImage;
+    OpenDialog: TOpenDialog;
+    btnAdd: TImage;
+    listMusic: TListBox;
+    MediaPlayer: TMediaPlayer;
+    btnPause: TImage;
+    Image1: TImage;
+    procedure btnPlayClick(Sender: TObject);
+    procedure btnCloseClick(Sender: TObject);
+    procedure pnlHeaderMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure btnAddClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure listMusicDrawItem(Control: TWinControl; Index: Integer;
+      Rect: TRect; State: TOwnerDrawState);
+    procedure AtualizarLabelMusica(const FilePath: string);
+  private
+    { Private declarations }
+    isPlaying: Boolean;
+    isPaused: Boolean;
+  public
+    { Public declarations }
+  end;
+
+var
+  ViewMusicPlayer: TViewMusicPlayer;
+
+implementation
+
+{$R *.dfm}
+
+procedure TViewMusicPlayer.btnPlayClick(Sender: TObject);
+begin
+  if not isPlaying then
+  begin
+    if listMusic.ItemIndex > -1 then
+    begin
+      MediaPlayer.FileName := string(listMusic.Items.Objects[listMusic.ItemIndex]);
+      MediaPlayer.Open;
+      MediaPlayer.Play;
+      isPlaying := True;
+      isPaused := False;
+      btnPause.Visible := True;
+      btnPlay.Visible := False;
+    end;
+  end
+  else
+  begin
+    if not isPaused then
+    begin
+      MediaPlayer.Pause;
+      btnPlay.Visible := True;
+      btnPause.Visible := False;
+      isPaused := True;
+    end
+    else
+    begin
+      MediaPlayer.Play;
+      btnPlay.Visible := False;
+      btnPause.Visible := True;
+      isPaused := False;
+    end;
+  end;
+end;
+
+procedure TViewMusicPlayer.FormCreate(Sender: TObject);
+begin
+  isPlaying := False;
+  isPaused := False;
+end;
+
+procedure TViewMusicPlayer.listMusicDrawItem(Control: TWinControl;
+  Index: Integer; Rect: TRect; State: TOwnerDrawState);
+begin
+  listMusic.Style := lbOwnerDrawFixed;
+end;
+
+
+procedure TViewMusicPlayer.AtualizarLabelMusica(const FilePath: string);
+var
+  NomeArquivo, NomeMusica, NomeArtista: string;
+  Partes: TArray<string>;
+begin
+  NomeArquivo := ExtractFileName(ChangeFileExt(FilePath, '')); // tira o .mp3
+  Partes := SplitString(NomeArquivo, ' - '); // separa por " - "
+
+  if Length(Partes) = 2 then
+  begin
+    NomeArtista := Partes[0];
+    NomeMusica := Partes[1];
+  end
+  else
+  begin
+    NomeArtista := 'Desconhecido';
+    NomeMusica := NomeArquivo;
+  end;
+
+    lblArtist.Caption := NomeArtista;
+    lblSongTitle.Caption := NomeMusica;
+end;
+
+procedure TViewMusicPlayer.btnAddClick(Sender: TObject);
+begin
+    OpenDialog.Filter := 'Arquivos de áudio|*.mp3;*.wav';
+  if OpenDialog.Execute then
+  begin
+      listMusic.Items.AddObject(
+      ExtractFileName(OpenDialog.FileName),
+      TObject(OpenDialog.FileName));
+  end;
+end;
+
+procedure TViewMusicPlayer.btnCloseClick(Sender: TObject);
+begin
+  Self.Close;
+end;
+
+procedure TViewMusicPlayer.pnlHeaderMouseDown(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+const
+   sc_DragMove = $f012;
+begin
+  ReleaseCapture;
+  Perform(wm_SysCommand, sc_DragMove, 0);
+end;
+
+end.
