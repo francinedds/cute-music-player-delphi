@@ -26,6 +26,7 @@ pngwing - raposa deitada → Música pausada.
 pngwing - raposa em pé → Música tocando.
 
 - TrackBar Funcional (Progresso da Música):
+
 A TTrackBar mostra o progresso da música em tempo real.
 
 A posição da barra se atualiza automaticamente enquanto a música toca.
